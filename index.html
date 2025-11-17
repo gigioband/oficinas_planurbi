@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficinas Inteligentes - Apresentação Completa</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+
+    <style>
+        /* Estilos base dos seus arquivos */
+        body { margin: 0; font-family: 'Montserrat', sans-serif; }
+        .slide-container { 
+            width: 100%; /* Ajuste para preencher a largura total da tela */
+            min-height: 100vh; /* Usa a altura total da viewport para que a navegação por âncora funcione bem */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 80px 0 0 0; /* Espaço para o menu fixo */
+        }
+        
+        /* Estilos para o menu superior (Navbar) */
+        .menu-superior {
+            background-color: #1e3a8a; /* Cor base do seu index.html */
+            overflow: hidden;
+            position: fixed; /* Fixa o menu no topo */
+            top: 0;
+            width: 100%;
+            z-index: 2000; /* Garante que fique acima de todo o conteúdo */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: center;
+        }
+        .menu-superior a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem; /* sm */
+            transition: background-color 0.3s;
+        }
+        .menu-superior a:hover {
+            background-color: #3b82f6;
+        }
+        .nav-content {
+            display: flex;
+            max-width: 1280px; /* Limita a largura do conteúdo do menu */
+            overflow-x: auto; /* Permite rolar horizontalmente em telas menores */
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* Classe de correção para o estilo original de 'slide-container' */
+        .slide-container > div.w-full.max-w-6xl.px-8 {
+            margin-top: 2rem; /* Adiciona um espaço extra na parte superior */
+            margin-bottom: 2rem;
+        }
+
+        /* Classes de Fundo */
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #3b82f6 100%); }
+    </style>
+</head>
+<body>
+
+    <nav class="menu-superior">
+        <div class="nav-content">
+            <a href="#home">Home</a>
+            <a href="#introducao">Introdução</a>
+            <a href="#objetivos">Objetivos</a>
+            <a href="#justificativa">Justificativa</a>
+            <a href="#metodologia">Metodologia</a>
+            <a href="#etapas">Etapas</a>
+            <a href="#diferenciais">Diferenciais</a>
+            <a href="#indicadores">Indicadores</a>
+            <a href="#resultados">Resultados</a>
+            <a href="#cronograma">Cronograma</a>
+            <a href="#case1">Case 1</a>
+            <a href="#case2">Case 2</a>
+        </div>
+    </nav>
+
+    <section id="home" class="slide-container gradient-bg text-white">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <i class="fas fa-network-wired text-9xl absolute top-10 right-10 text-white"></i>
+            <i class="fas fa-city text-7xl absolute bottom-20 left-20 text-white"></i>
+            <i class="fas fa-users text-5xl absolute top-32 left-32 text-white"></i>
+            <i class="fas fa-robot text-6xl absolute bottom-32 right-32 text-white"></i>
+        </div>
+        <div class="relative z-10 text-center px-12">
+            <h1 class="text-6xl font-black mb-4 leading-tight">Oficinas Inteligentes</h1>
+            <h2 class="text-5xl font-bold mb-6 text-yellow-300">com Bárbara</h2>
+            <div class="w-24 h-1 bg-yellow-300 mx-auto mb-8"></div>
+            <p class="text-2xl font-light mb-8 max-w-3xl leading-relaxed">
+                Modernização e Democratização da Participação Popular no Plano Diretor
+            </p>
+            <div class="flex items-center justify-center space-x-6 text-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-brain text-2xl mr-2 text-yellow-300"></i>
+                    <span>Inteligência Artificial</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fab fa-whatsapp text-2xl mr-2 text-green-400"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-handshake text-2xl mr-2 text-yellow-300"></i>
+                    <span>Participação Cidadã</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="introducao" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-12 text-center">Introdução</h1>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">O Desafio</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Baixa participação e barreiras de acesso nos processos tradicionais de elaboração do Plano Diretor</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-lightbulb text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">A Solução</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Integração de tecnologia acessível + inteligência artificial + metodologias participativas híbridas</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bullseye text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">O Que Entregamos</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Escuta ampla, qualificada e transparente com relatórios e mapas temáticos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="objetivos" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Objetivos do Projeto</h1>
+            <div class="bg-white rounded-lg p-6 shadow-lg mb-6 border-l-4 border-blue-600">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-bullseye text-blue-600 text-3xl mr-3"></i>
+                    Objetivo Geral
+                </h2>
+                <p class="text-gray-700 text-lg leading-relaxed">Promover uma participação ampla, inclusiva e qualificada da população na construção do Plano Diretor, utilizando ferramentas digitais acessíveis e metodologias híbridas</p>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-green-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fab fa-whatsapp text-green-500 text-xl mr-2"></i>
+                        Acesso via WhatsApp
+                    </h3>
+                    <p class="text-gray-600 text-sm">Facilitar o acesso dos cidadãos às discussões do Plano Diretor por meio de canais digitais como o WhatsApp</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-purple-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-link text-purple-500 text-xl mr-2"></i>
+                        Integração de Contribuições
+                    </h3>
+                    <p class="text-gray-600 text-sm">Integrar contribuições presenciais e virtuais em uma base única, auditável e transparente</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-orange-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-users text-orange-500 text-xl mr-2"></i>
+                        Engajamento Diverso
+                    </h3>
+                    <p class="text-gray-600 text-sm">Estimular o engajamento de diferentes faixas etárias e perfis sociais</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-red-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-chart-line text-red-500 text-xl mr-2"></i>
+                        Indicadores de Impacto
+                    </h3>
+                    <p class="text-gray-600 text-sm">Desenvolver indicadores de impacto que qualifiquem a efetividade da participação</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-indigo-500 col-span-2">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-share-alt text-indigo-500 text-xl mr-2"></i>
+                        Modelo Replicável
+                    </h3>
+                    <p class="text-gray-600 text-sm">Criar um modelo replicável para outros municípios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="justificativa" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-12 text-center">Justificativa</h1>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line-down text-3xl text-red-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Problemas Atuais</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Baixa participação e barreiras de acesso</li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Fragmentação de dados e pouca transparência</li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Dificuldade de devolutivas claras à população</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Solução IA + WhatsApp</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Acesso simples, gratuito e 24/7 no canal do cotidiano</li>
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Linguagem clara e organização automática das contribuições</li>
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Trazo de auditoria e visibilidade pública dos resultados</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Valor Público Gerado</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Mais legitimidade nas decisões urbanas</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Maior eficiência no processo participativo</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Fortalecimento da confiança social</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="metodologia" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-12 text-center">Como Funciona — Metodologia</h1>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mobile-alt text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Canais Integrados</h2>
+                    </div>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fab fa-whatsapp text-green-500 mr-2"></i> WhatsApp Business API</li>
+                        <li><i class="fas fa-qrcode text-blue-500 mr-2"></i> QR Codes inteligentes</li>
+                        <li><i class="fas fa-file-alt text-purple-500 mr-2"></i> Formulários online</li>
+                        <li><i class="fas fa-users text-orange-500 mr-2"></i> Oficinas híbridas</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Assistente Virtual Bárbara</h2>
+                    </div>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fas fa-brain text-blue-500 mr-2"></i> IA treinada para interpretar</li>
+                        <li><i class="fas fa-layer-group text-purple-500 mr-2"></i> Organiza por temas territoriais</li>
+                        <li><i class="fas fa-filter text-green-500 mr-2"></i> Categorização automática</li>
+                        <li><i class="fas fa-comments text-orange-500 mr-2"></i> Respostas padronizadas</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Dashboard de Transparência</h2>
+                    </div>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fas fa-tachometer-alt text-blue-500 mr-2"></i> Indicadores em tempo real</li>
+                        <li><i class="fas fa-map-marked-alt text-green-500 mr-2"></i> Mapas temáticos interativos</li>
+                        <li><i class="fas fa-file-invoice text-purple-500 mr-2"></i> Relatórios automáticos</li>
+                        <li><i class="fas fa-eye text-orange-500 mr-2"></i> Visibilidade pública total</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="etapas" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Etapas de Implementação</h1>
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-0.5 h-full w-1 bg-gray-300 top-0"></div>
+                <div class="space-y-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-blue-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 1 - Planejamento e Preparação</h3>
+                            <p class="text-gray-600 text-sm">Definição da equipe técnica, configuração das ferramentas digitais e LGPD, elaboração de materiais de comunicação</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-purple-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 2 - Treinamento e Calibração da IA</h3>
+                            <p class="text-gray-600 text-sm">Treinamento inicial do modelo de linguagem, testes regionais de interpretação e categorização</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-green-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 3 - Capacitação e Mobilização</h3>
+                            <p class="text-gray-600 text-sm">Formação de mediadores locais, campanha de comunicação integrada (digital + presencial)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">4-5</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-orange-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Meses 4 e 5 - Oficinas Inteligentes</h3>
+                            <p class="text-gray-600 text-sm">Realização das oficinas híbridas em bairros e comunidades, coleta contínua via WhatsApp e QR Codes</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">6</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-red-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 6 - Análise e Validação</h3>
+                            <p class="text-gray-600 text-sm">Organização das contribuições, validação comunitárias e devolutiva (“feedback loop”)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold">7</div>
+                        <div class="ml-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-teal-500">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 7 - Encerramento e Relatório Final</h3>
+                            <p class="text-gray-600 text-sm">Síntese técnica das contribuições incorporadas ao Plano Diretor, avaliação do impacto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="diferenciais" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-12 text-center">Diferenciais e Inovação</h1>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shield-alt text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Conformidade LGPD</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Consentimento explícito, finalidade clara e segurança de dados garantida em toda a coleta</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hands-helping text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Inclusão Digital</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Pontos de apoio presencial com mediadores locais para cidadãos sem acesso à internet</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-check-double text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Validação Cruzada</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Revisão das contribuições de maior impacto junto às comunidades locais</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gamepad text-3xl text-orange-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Gamificação</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">"Missões Urbanas" para engajar juventude e ampliar o senso de pertencimento</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-indigo-500 mt-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-sync-alt text-3xl text-indigo-500 mr-3"></i>
+                    <h2 class="text-xl font-bold text-gray-800">Replicabilidade</h2>
+                </div>
+                <p class="text-gray-600 leading-relaxed">Arquitetura modular e documentada, aplicável a qualquer município brasileiro</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="indicadores" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Indicadores de Impacto</h1>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Quantitativos</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-users text-blue-500 mr-2"></i> Nº de participantes</li>
+                        <li class="flex items-center"><i class="fas fa-comments text-blue-500 mr-2"></i> Mensagens recebidas</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-check text-blue-500 mr-2"></i> Oficinas realizadas</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-star text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Qualitativos</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-smile text-green-500 mr-2"></i> Satisfação dos cidadãos</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Aplicabilidade das contribuições</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-eye text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Transparência</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-reply text-purple-500 mr-2"></i> Taxa de devolutivas públicas</li>
+                        <li class="flex items-center"><i class="fas fa-chart-bar text-purple-500 mr-2"></i> Relatórios e dashboards</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resultados" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-12 text-center">Resultados Esperados</h1>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-users text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Ampliação da Participação</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Aumento significativo no número de cidadãos participantes do processo de elaboração do Plano Diretor</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Melhoria na Qualidade</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Maior diversidade e qualidade das contribuições recebidas, com maior representatividade social</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Fortalecimento da Confiança</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Relação mais transparente e confiável entre a população e o poder público municipal</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-share-alt text-3xl text-orange-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Metodologia Replicável</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Modelo de engajamento digital que pode ser aplicado em outras políticas públicas municipais</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cronograma" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Cronograma Visual</h1>
+            <div class="flex justify-center">
+                <div class="relative w-full max-w-5xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M1</div>
+                            <h3 class="font-bold text-lg text-gray-800">Kick-off</h3>
+                            <p class="text-gray-600 text-sm">Plano de comunicação</p>
+                            <p class="text-gray-600 text-sm">Compliance LGPD</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4"></div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M2</div>
+                            <h3 class="font-bold text-lg text-gray-800">IA Calibrada</h3>
+                            <p class="text-gray-600 text-sm">Modelo treinado</p>
+                            <p class="text-gray-600 text-sm">Testes aprovados</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4"></div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M3</div>
+                            <h3 class="font-bold text-lg text-gray-800">Mediadores</h3>
+                            <p class="text-gray-600 text-sm">100% formados</p>
+                            <p class="text-gray-600 text-sm">Campanha ativa</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1"></div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M4-5</div>
+                            <h3 class="font-bold text-lg text-gray-800">Oficinas</h3>
+                            <p class="text-gray-600 text-sm">Realizadas por bairros</p>
+                            <p class="text-gray-600 text-sm">Painel público ativo</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4"></div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M6</div>
+                            <h3 class="font-bold text-lg text-gray-800">Validação</h3>
+                            <p class="text-gray-600 text-sm">Análise temática</p>
+                            <p class="text-gray-600 text-sm">Feedback comunitário</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4"></div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M7</div>
+                            <h3 class="font-bold text-lg text-gray-800">Relatório Final</h3>
+                            <p class="text-gray-600 text-sm">Apresentação oficial</p>
+                            <p class="text-gray-600 text-sm">Entrega para sociedade</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="case1" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Case Study 1: Teresina - PI</h1>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-blue-500">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-2xl mr-3"></i>
+                        O Desafio
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Engajar mais de 80.000 pessoas no processo de revisão do Plano Diretor de Teresina,
+                        superando barreiras geográficas e de acesso digital.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-lightbulb text-green-500 text-2xl mr-3"></i>
+                        Solução Aplicada
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Implementação da Assistente Virtual Bárbara via WhatsApp e oficinas híbridas,
+                        permitindo contribuições por texto, áudio e presença física.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-purple-500 col-span-2">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-chart-bar text-purple-500 text-2xl mr-3"></i>
+                        Resultados de Impacto
+                    </h2>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> **250%** de aumento na participação comparado a processos anteriores.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Mais de **12.000** contribuições qualificadas coletadas.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Dashboard de transparência com visualização pública dos dados.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="case2" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-4xl font-black text-gray-800 mb-8 text-center">Case Study 2: Jaboatão dos Guararapes - PE</h1>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-orange-500">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-building text-orange-500 text-2xl mr-3"></i>
+                        Contexto Urbano
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Cidade com alta densidade populacional e desigualdade social, exigindo um processo participativo que alcançasse as comunidades de forma direta.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-red-500">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-mobile-alt text-red-500 text-2xl mr-3"></i>
+                        Inclusão Cidadã
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Uso de QR Codes em espaços públicos e transporte para facilitar o acesso de quem estava em movimento, além de formulários simplificados.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-indigo-500">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-handshake text-indigo-500 text-2xl mr-3"></i>
+                        Legitimidade
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Taxa de devolutiva (feedback) pública superior a 90% das contribuições analisadas, fortalecendo a confiança no poder público.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
