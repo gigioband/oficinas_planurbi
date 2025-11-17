@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oficinas Inteligentes - Apresentação Completa Responsiva</title>
+    <title>Oficinas Inteligentes - Apresentação Completa Responsiva (V2)</title>
     
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -22,7 +22,7 @@
             justify-content: center; 
             align-items: center; 
             padding: 80px 0 40px 0; /* Espaço para o menu fixo + padding inferior */
-            box-sizing: border-box; /* Garante que o padding não cause overflow */
+            box-sizing: border-box; 
         }
         
         /* Estilos para o menu superior (Navbar) */
@@ -77,18 +77,17 @@
                 flex-direction: column; /* Força a pilha vertical */
                 align-items: flex-start; /* Alinha à esquerda */
             }
-            .cronograma-flex-container > div {
+            .cronograma-flex-container > div.cronograma-item {
                 width: 100%; /* Ocupa a largura total */
-            }
-            .cronograma-flex-container .flex-1 {
-                display: none; /* Esconde os traços horizontais */
-            }
-            .cronograma-item {
-                margin-bottom: 2rem;
                 text-align: left;
+                margin-bottom: 2rem;
+            }
+            /* Esconde os traços horizontais em mobile */
+            .cronograma-flex-container > div.flex-1 {
+                display: none;
             }
             .cronograma-item .w-16 {
-                margin-left: 0; /* Remove a margem automática do mx-auto */
+                margin-left: 0; /* Alinha os círculos à esquerda */
             }
         }
     </style>
@@ -313,44 +312,50 @@
             <div class="relative">
                 <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-0.5 h-full w-1 bg-gray-300 top-0"></div>
                 <div class="space-y-8">
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">1</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-blue-500 w-full">
+
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">1</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-blue-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 1 - Planejamento e Preparação</h3>
                             <p class="text-gray-600 text-sm">Definição da equipe técnica, configuração das ferramentas digitais e LGPD, elaboração de materiais de comunicação</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">2</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-purple-500 w-full">
+
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">2</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-purple-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 2 - Treinamento e Calibração da IA</h3>
                             <p class="text-gray-600 text-sm">Treinamento inicial do modelo de linguagem, testes regionais de interpretação e categorização</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">3</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-green-500 w-full">
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">3</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-green-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 3 - Capacitação e Mobilização</h3>
                             <p class="text-gray-600 text-sm">Formação de mediadores locais, campanha de comunicação integrada (digital + presencial)</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">4-5</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-orange-500 w-full">
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">4-5</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-orange-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Meses 4 e 5 - Oficinas Inteligentes</h3>
                             <p class="text-gray-600 text-sm">Realização das oficinas híbridas em bairros e comunidades, coleta contínua via WhatsApp e QR Codes</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">6</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-red-500 w-full">
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">6</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-red-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 6 - Análise e Validação</h3>
                             <p class="text-gray-600 text-sm">Organização das contribuições, validação comunitárias e devolutiva (“feedback loop”)</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">7</div>
-                        <div class="ml-16 pl-0 md:ml-20 md:pl-6 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-teal-500 w-full">
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">7</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-teal-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
                             <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 7 - Encerramento e Relatório Final</h3>
                             <p class="text-gray-600 text-sm">Síntese técnica das contribuições incorporadas ao Plano Diretor, avaliação do impacto</p>
                         </div>
