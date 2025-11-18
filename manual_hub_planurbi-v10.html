@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual HUB PlanUrbi - Barra de São Miguel/AL</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #2E7D32;
+            --secondary: #66BB6A;
+            --accent: #4CAF50;
+            --text: #333;
+            --bg: #F5F5F5;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #F5F5F5 0%, #E8F5E9 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .container {
+            display: flex;
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+        .sidebar-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            border-bottom: 2px solid var(--accent);
+        }
+        .sidebar-header h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .search-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .nav-section {
+            margin-bottom: 0.5rem;
+        }
+        .nav-section-title {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .nav-section-title:hover {
+            background: #F5F5F5;
+            border-left-color: var(--accent);
+        }
+        .nav-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+        .nav-section.expanded .nav-arrow {
+            transform: rotate(90deg);
+        }
+        .nav-subsection {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .nav-section.expanded .nav-subsection {
+            max-height: 1000px;
+        }
+        .nav-item {
+            padding: 0.6rem 1.5rem 0.6rem 3rem;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .nav-item:hover {
+            background: #F5F5F5;
+            color: var(--primary);
+            padding-left: 3.3rem;
+        }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(76, 175, 80, 0.1), transparent);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 2rem;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent);
+        }
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .content-card h4 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+        .content-card p {
+            margin-bottom: 1rem;
+        }
+        .content-card ul, .content-card ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        .content-card li {
+            margin-bottom: 0.5rem;
+        }
+        .screenshot {
+            width: 100%;
+            max-width: 800px;
+            margin: 1.5rem auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid #E0E0E0;
+        }
+        .screenshot-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .screenshot-caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .step-list {
+            counter-reset: step-counter;
+            margin: 1rem 0;
+            list-style: none;
+        }
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--accent);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 0.75rem 0 0.75rem 2rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+        .alert-success {
+            background: #E8F5E9;
+            border-color: var(--accent);
+            color: var(--primary);
+        }
+        .alert-info {
+            background: #E3F2FD;
+            border-color: #2196F3;
+            color: #1565C0;
+        }
+        .alert-warning {
+            background: #FFF3E0;
+            border-color: #FF9800;
+            color: #E65100;
+        }
+        .mobile-toggle {
+            display: none;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>
+            <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">HUB</div>
+            Manual do Usuário - HUB PlanUrbi
+        </h1>
+        <div>Município de Barra de São Miguel/AL</div>
+    </header>
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 Navegação</h2>
+                <input type="text" class="search-box" placeholder="Buscar no manual..." onkeyup="searchContent(event)">
+            </div>
+            <div class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="showContent('apresentacao')">
+                        <span>1. Apresentação</span>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        <span>2. Visão Geral</span>
+                        <span class="nav-arrow">▶</span>
+                    </div>
+                    <div class="nav-subsection">
+                        <div class="nav-item" onclick="showContent('tela-login')">2.1.1 Tela de Login</div>
+                        <div class="nav-item" onclick="showContent('tela-inicial')">2.1.2 Tela Inicial</div>
+                        <div class="nav-item" onclick="showContent('tela-listagem')">2.1.3 Tela de Listagem</div>
+                        <div class="nav-item" onclick="showContent('tela-visualizacao')">2.1.4 Visualização</div>
+                        <div class="nav-item" onclick="showContent('estado-botoes')">2.2 Estado dos Botões</div>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        <span>3. Acesso ao Site</span>
+                        <span class="nav-arrow">▶</span>
+                    </div>
+                    <div class="nav-subsection">
+                        <div class="nav-item" onclick="showContent('como-login')">3.1 Como Fazer Login</div>
+                        <div class="nav-item" onclick="showContent('criar-senha')">3.2 Criar Nova Senha</div>
+                        <div class="nav-item" onclick="showContent('recuperar-senha')">3.3 Recuperar Senha</div>
+                    </div>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        <span>4. Funcionalidades</span>
+                        <span class="nav-arrow">▶</span>
+                    </div>
+                    <div class="nav-subsection">
+                        <div class="nav-item" onclick="showContent('acessar-municipio')">4.1 Acessar Município</div>
+                        <div class="nav-item" onclick="showContent('listagem-imoveis')">4.2 Listagem</div>
+                        <div class="nav-item" onclick="showContent('utilizar-filtros')">4.3 Filtros</div>
+                        <div class="nav-item" onclick="showContent('exportar-csv')">4.4 Exportar CSV</div>
+                        <div class="nav-item" onclick="showContent('mudar-pagina')">4.5 Paginação</div>
+                        <div class="nav-item" onclick="showContent('visualizar-imovel')">4.6 Visualizar um Imóvel</div>
+                        <div class="nav-item" onclick="showContent('sair-sistema')">4.7 Sair</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <div id="welcome" class="content-section active">
+                <div class="section-header">
+                    <h2>Bem-vindo ao Manual do HUB PlanUrbi</h2>
+                    <p>Sistema de Gestão de Dados Imobiliários</p>
+                </div>
+                <div class="content-card">
+                    <h3>📋 Sobre este Manual</h3>
+                    <p>Este manual interativo auxilia os usuários do sistema HUB PlanUrbi da Prefeitura de Barra de São Miguel/AL.</p>
+                    <ul class="feature-list">
+                        <li>Instruções detalhadas sobre todas as funcionalidades</li>
+                        <li>Passo a passo para as operações principais</li>
+                        <li>Dicas e boas práticas de uso</li>
+                        <li>Resolução de problemas comuns</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 1. Apresentação -->
+            <div id="apresentacao" class="content-section">
+                <div class="section-header">
+                    <h2>1. Apresentação</h2>
+                </div>
+                <div class="content-card">
+                    <h3>O que é o AdminHub PlanUrbi</h3>
+                    <p>É o Sistema de Gestão de Dados Imobiliários que permite visualizar os dados dos imóveis coletados em campo no município da Barra de São Miguel pelo programa PlanUrbi de mapeamento inteligente.</p>
+                </div>
+            </div>
+
+            <!-- 2.1.1 Tela de Login -->
+            <div id="tela-login" class="content-section">
+                <div class="section-header">
+                    <h2>2.1.1 Tela de Login</h2>
+                </div>
+                <div class="content-card">
+                    <div class="screenshot-container">
+                        <img src="images/image2.png" alt="Tela de Login" class="screenshot">
+                        <p class="screenshot-caption">Tela de Login do Sistema</p>
+                    </div>
+                    
+                    <h3>Elementos da Tela</h3>
+                    <p><strong>1 - Campos de CPF e Senha:</strong> Espaços onde o usuário deve digitar seu CPF e sua senha para acessar o sistema.</p>
+                    <p><strong>2 - Botão "Entrar":</strong> Clique para fazer o login após preencher os campos.</p>
+                    <p><strong>3 - Botão "Esqueci minha senha":</strong> Use quando não lembrar a senha. O sistema irá guiar o usuário para redefini-la.</p>
+                </div>
+            </div>
+
+            <!-- 2.1.2 Tela Inicial -->
+            <div id="tela-inicial" class="content-section">
+                <div class="section-header">
+                    <h2>2.1.2 Tela Inicial</h2>
+                </div>
+                <div class="content-card">
+                    <div class="screenshot-container">
+                        <img src="images/image24.png" alt="Tela Inicial" class="screenshot">
+                        <p class="screenshot-caption">Tela Inicial com Card do Município</p>
+                    </div>
+                    
+                    <h3>Componentes da Interface</h3>
+                    <h4>1 - Menu superior</h4>
+                    <p>Contém dois botões:</p>
+                    <ul>
+                        <li>À esquerda, um campo de seleção para escolher o município.</li>
+                        <li>À direita, o botão "Sair", usado para encerrar o acesso ao sistema.</li>
+                    </ul>
+                    
+                    <h4>2 - Card do município</h4>
+                    <p>Mostra as informações do município selecionado, incluindo o nome, foto, localização e data da última atualização dos imóveis.</p>
+                    
+                    <h4>3 - Botão de acesso aos dados</h4>
+                    <p>Ao clicar, o usuário entra na página com os dados detalhados do município escolhido.</p>
+                </div>
+            </div>
+
+            <!-- 2.1.3 Tela de Listagem -->
+            <div id="tela-listagem" class="content-section">
+                <div class="section-header">
+                    <h2>2.1.3 Tela de Listagem</h2>
+                </div>
+                <div class="content-card">
+                    <div class="screenshot-container">
+                        <img src="images/image10.png" alt="Área de Filtros" class="screenshot">
+                        <p class="screenshot-caption">Área de Filtros da Listagem</p>
+                    </div>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image40.png" alt="Lista de Imóveis" class="screenshot">
+                        <p class="screenshot-caption">Lista de Imóveis e Paginação</p>
+                    </div>
+                    
+                    <h3>Estrutura da Tela</h3>
+                    
+                    <h4>1 - Filtros</h4>
+                    <p>Área onde o usuário pode definir critérios de busca, como datas, bairro, tipo ou situação do imóvel, para refinar os resultados exibidos.</p>
+                    
+                    <h4>2 - Listagem de imóveis</h4>
+                    <p>Mostra o total de imóveis encontrados, o botão para exportar os dados em formato CSV e a lista com as informações principais de cada imóvel: foto, endereço, frentes, tipo, natureza, fechamento, estrutura, padrão, andar, situação da rua e data de cadastro.</p>
+                    
+                    <h4>3 - Paginação</h4>
+                    <p>Exibe em qual página o usuário está e o total de páginas disponíveis, além de botões para avançar ou voltar entre as páginas da listagem.</p>
+                </div>
+            </div>
+
+            <!-- 2.1.4 Tela de Visualização -->
+            <div id="tela-visualizacao" class="content-section">
+                <div class="section-header">
+                    <h2>2.1.4 Tela de Visualização de Imóvel</h2>
+                </div>
+                <div class="content-card">
+                    <div class="screenshot-container">
+                        <img src="images/image39.png" alt="Visualização do Imóvel - Parte Superior" class="screenshot">
+                        <p class="screenshot-caption">Foto e Resumo das Informações</p>
+                    </div>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image22.png" alt="Visualização do Imóvel - Parte Inferior" class="screenshot">
+                        <p class="screenshot-caption">Informações de Endereço e Terreno</p>
+                    </div>
+                    
+                    <h3>Detalhes do Imóvel</h3>
+                    
+                    <h4>1 - Botão "Voltar"</h4>
+                    <p>Retorna para a tela anterior com a listagem de imóveis.</p>
+                    
+                    <h4>2 - Foto do imóvel</h4>
+                    <p>Exibe a imagem da frente do imóvel cadastrado.</p>
+                    
+                    <h4>3 - Resumo das informações</h4>
+                    <p>Mostra os dados principais do imóvel, como endereço, coordenadas, se é terreno ou lote, e quem realizou o envio. Inclui também as informações gerais: Perímetro, Natureza, Data e hora de criação, Data e hora da última atualização e Observações.</p>
+                    
+                    <h4>4 - Informações de Endereço</h4>
+                    <p>Reúne os dados de localização:</p>
+                    <ul>
+                        <li>Endereço Principal: Rua, Número, Bairro e CEP</li>
+                        <li>Endereço Fiscal: CPF/CNPJ, indicação se é o mesmo endereço e o responsável identificado</li>
+                        <li>Coordenadas: Latitude e Longitude</li>
+                    </ul>
+                    
+                    <h4>5 - Informações do Terreno/Lote</h4>
+                    <p>Apresenta as características do lote, incluindo número de frentes, se possui calçada e o tipo de fechamento.</p>
+                </div>
+            </div>
+
+            <!-- 2.2 Estado dos Botões -->
+            <div id="estado-botoes" class="content-section">
+                <div class="section-header">
+                    <h2>2.2 Estado dos Botões</h2>
+                </div>
+                <div class="content-card">
+                    <p>Os botões podem aparecer em dois estados, dependendo da ação disponível no momento.</p>
+                    
+                    <div class="alert alert-success">
+                        <strong>Botão Ativo:</strong> indica que a ação pode ser realizada. O botão está visível e pode ser clicado.
+                        <div class="screenshot-container">
+                            <img src="images/image21.png" alt="Botão Ativo" class="screenshot" style="max-width: 400px;">
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>Botão Inativo:</strong> indica que a ação não está disponível naquele momento. O botão aparece com cor mais clara e não pode ser clicado.
+                        <div class="screenshot-container">
+                            <img src="images/image35.png" alt="Botão Inativo" class="screenshot" style="max-width: 400px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3.1 Como Fazer Login -->
+            <div id="como-login" class="content-section">
+                <div class="section-header">
+                    <h2>3.1 Como Fazer Login</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Passo a Passo</h3>
+                    <ol class="step-list">
+                        <li>Acesse o link <strong>https://hub.planurbi.com.br/</strong></li>
+                        <li>No campo CPF, digite seu número de CPF (somente números)
+                            <div class="screenshot-container">
+                                <img src="images/image23.png" alt="Campo CPF" class="screenshot">
+                            </div>
+                        </li>
+                        <li>No campo Senha, digite sua senha
+                            <div class="screenshot-container">
+                                <img src="images/image29.png" alt="Campo Senha" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Clique no botão verde "Entrar"
+                            <div class="screenshot-container">
+                                <img src="images/image48.png" alt="Botão Entrar" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <h4>Resultado esperado</h4>
+                    <div class="alert alert-success">
+                        <strong>Caso de sucesso:</strong> Você será direcionado para a página inicial do sistema.
+                        <div class="screenshot-container">
+                            <img src="images/image12.png" alt="Login bem-sucedido" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que o CPF ou a senha estão incorretos. Se o erro continuar, utilize a opção "Esqueci minha senha" ou entre em contato com o suporte.
+                        <div class="screenshot-container">
+                            <img src="images/image7.png" alt="Erro no login" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3.2 Criar Nova Senha -->
+            <div id="criar-senha" class="content-section">
+                <div class="section-header">
+                    <h2>3.2 Criar Nova Senha</h2>
+                </div>
+                <div class="content-card">
+                    <p>Quando fizer login pela primeira vez, será necessário criar sua nova senha, por questões de segurança.</p>
+                    
+                    <h3>Procedimento</h3>
+                    <ol class="step-list">
+                        <li>Insira sua "Nova senha" no primeiro campo, ela deve conter no mínimo 4 caracteres</li>
+                        <li>Repita a mesma senha no campo "Confirmar Nova Senha"
+                            <div class="screenshot-container">
+                                <img src="images/image50.png" alt="Campos de criar nova senha" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Clique no botão "Salvar Nova Senha"
+                            <div class="screenshot-container">
+                                <img src="images/image43.png" alt="Botão Salvar Nova Senha" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <h4>Resultado esperado</h4>
+                    <div class="alert alert-success">
+                        <strong>Caso de sucesso:</strong> Surgirá uma mensagem de sucesso e você será direcionado para a página inicial do sistema.
+                        <div class="screenshot-container">
+                            <img src="images/image3.png" alt="Senha criada com sucesso" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que as senhas não coincidem ou que os campos estão vazios. Verifique se digitou corretamente e tente novamente.
+                        <div class="screenshot-container">
+                            <img src="images/image31.png" alt="Erro - senhas não coincidem" class="screenshot">
+                        </div>
+                        <div class="screenshot-container">
+                            <img src="images/image28.png" alt="Erro - campos vazios" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3.3 Recuperar Senha -->
+            <div id="recuperar-senha" class="content-section">
+                <div class="section-header">
+                    <h2>3.3 Como Recuperar a Senha</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Passos para Recuperação</h3>
+                    <ol class="step-list">
+                        <li>Clique em "Esqueceu a senha?"
+                            <div class="screenshot-container">
+                                <img src="images/image1.png" alt="Link Esqueceu a senha" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Digite seu CPF
+                            <div class="screenshot-container">
+                                <img src="images/image8.png" alt="Tela de recuperação - digitar CPF" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Clique em "Redefinir Senha"
+                            <div class="screenshot-container">
+                                <img src="images/image36.png" alt="Botão Redefinir Senha" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <h4>Resultado esperado</h4>
+                    <div class="alert alert-success">
+                        <strong>Caso de sucesso:</strong> Surgirá uma mensagem de sucesso. Clique em "Voltar para o Login" e faça login com seu CPF e a Nova senha.
+                        <div class="screenshot-container">
+                            <img src="images/image46.png" alt="Senha redefinida com sucesso" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que o CPF é inválido. Nesse caso, verifique se digitou corretamente e tente novamente.
+                        <div class="screenshot-container">
+                            <img src="images/image47.png" alt="Erro - CPF inválido" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.1 Acessar Município -->
+            <div id="acessar-municipio" class="content-section">
+                <div class="section-header">
+                    <h2>4.1 Acessar Município</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Como Selecionar um Município</h3>
+                    <p>Ao clicar no botão "Municípios" na parte superior direita da tela surgirá uma lista dos municípios que você tem acesso. Clique no município desejado.</p>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image11.png" alt="Seleção de Município" class="screenshot">
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> Você será encaminhado para a tela inicial e poderá acessar os dados dos imóveis do município selecionado.
+                        <div class="screenshot-container">
+                            <img src="images/image12.png" alt="Tela inicial do município selecionado" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.2 Listagem de Imóveis -->
+            <div id="listagem-imoveis" class="content-section">
+                <div class="section-header">
+                    <h2>4.2 Acessar Listagem de Imóveis</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Como Acessar</h3>
+                    <ol class="step-list">
+                        <li>Clique no botão "Acessar Dados"
+                            <div class="screenshot-container">
+                                <img src="images/image16.png" alt="Botão Acessar Dados" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> Você será encaminhado para a página da Listagem de Imóveis do Município.
+                        <div class="screenshot-container">
+                            <img src="images/image15.png" alt="Listagem de Imóveis" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.3 Utilizar Filtros -->
+            <div id="utilizar-filtros" class="content-section">
+                <div class="section-header">
+                    <h2>4.3 Utilizar Filtros</h2>
+                </div>
+                <div class="content-card">
+                    <p>Na parte superior da tela existem 5 tipos de Filtros: Bairro, Tipo de imóvel, Natureza imobiliária, De e Até.</p>
+                    
+                    <h4>Filtro Bairro</h4>
+                    <p>Campo onde você digita o nome do bairro que gostaria de buscar. Por exemplo: Centro.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image30.png" alt="Filtro de Bairro" class="screenshot">
+                    </div>
+                    <div class="alert alert-success">
+                        A listagem irá mostrar apenas os imóveis localizados no bairro informado.
+                        <div class="screenshot-container">
+                            <img src="images/image19.png" alt="Resultado filtrado por bairro" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <h4>Filtro Tipos de Imóvel</h4>
+                    <p>Ao clicar mostra uma lista com os tipos de imóveis existentes: Casa, Prédio, Condomínio e Todos os Tipos.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image18.png" alt="Filtro de Tipo de Imóvel" class="screenshot">
+                    </div>
+                    <div class="alert alert-success">
+                        A listagem irá mostrar apenas imóveis do tipo selecionado.
+                        <div class="screenshot-container">
+                            <img src="images/image33.png" alt="Resultado filtrado por tipo" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <h4>Filtro Natureza Imobiliária</h4>
+                    <p>Ao clicar mostra uma lista com os tipos de naturezas: Todas, Terreno, Edificação, Edificação Temporária e Ruínas.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image45.png" alt="Filtro de Natureza" class="screenshot">
+                    </div>
+                    <div class="alert alert-success">
+                        Na listagem irão aparecer apenas os imóveis da natureza selecionada.
+                        <div class="screenshot-container">
+                            <img src="images/image34.png" alt="Resultado filtrado por natureza" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <h4>Filtros de Data</h4>
+                    <p><strong>Filtro "De":</strong> Ao clicar neste campo, você escolhe a data inicial. Ou seja, a partir de qual data deseja visualizar os imóveis registrados.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image14.png" alt="Filtro De" class="screenshot">
+                    </div>
+                    
+                    <p><strong>Filtro "Até":</strong> Ao clicar neste campo, você escolhe a data final. Ou seja, até qual data deseja visualizar os imóveis registrados.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image27.png" alt="Filtros De e Até" class="screenshot">
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>Observação:</strong> O filtro "Até" só pode ser usado se o filtro "De" estiver preenchido. Caso nenhuma data seja selecionada, o sistema irá mostrar todos os imóveis registrados, sem filtro de período.
+                    </div>
+                    
+                    <h4>Botão "Limpar Filtros"</h4>
+                    <p>Remove todas as seleções feitas nos campos de filtro. Ao clicar nele, o sistema volta a mostrar todos os imóveis, sem aplicar nenhum filtro de busca.</p>
+                    <div class="screenshot-container">
+                        <img src="images/image17.png" alt="Botão Limpar Filtros" class="screenshot">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.4 Exportar CSV -->
+            <div id="exportar-csv" class="content-section">
+                <div class="section-header">
+                    <h2>4.4 Exportar CSV</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Como Exportar Dados</h3>
+                    <ol class="step-list">
+                        <li>Clique no botão "Exportar CSV"
+                            <div class="screenshot-container">
+                                <img src="images/image13.png" alt="Botão Exportar CSV" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Aguarde o carregamento
+                            <div class="screenshot-container">
+                                <img src="images/image20.png" alt="Carregando exportação" class="screenshot">
+                            </div>
+                        </li>
+                        <li>Após o carregamento, o arquivo será baixado automaticamente. Você pode encontrá-lo na pasta de downloads do seu computador, com o formato .csv, contendo todos os dados imobiliários exportados.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 4.5 Paginação -->
+            <div id="mudar-pagina" class="content-section">
+                <div class="section-header">
+                    <h2>4.5 Paginação</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Navegação entre Páginas</h3>
+                    <p>Na parte inferior da listagem tem a quantidade de páginas. Por exemplo: "Página 1 de 503" - onde "Página 1" indica a página atual e "de 503" o total de páginas existentes.</p>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image26.png" alt="Indicador de página" class="screenshot">
+                    </div>
+                    
+                    <p>Ao lado estão os botões que permitem alternar entre as páginas.</p>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image49.png" alt="Botões de paginação" class="screenshot">
+                    </div>
+                    
+                    <h4>Como usar:</h4>
+                    <ol class="step-list">
+                        <li>Clique no botão da direita para mudar para a próxima página
+                            <div class="screenshot-container">
+                                <img src="images/image41.png" alt="Clicando no botão de próxima página" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> A página será alterada mostrando uma listagem com outros imóveis.
+                        <div class="screenshot-container">
+                            <img src="images/image38.png" alt="Página alterada" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.6 Visualizar Imóvel -->
+            <div id="visualizar-imovel" class="content-section">
+                <div class="section-header">
+                    <h2>4.6 Visualizar um Imóvel</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Como Acessar Detalhes</h3>
+                    <ol class="step-list">
+                        <li>Na listagem clique sobre o endereço de um dos imóveis
+                            <div class="screenshot-container">
+                                <img src="images/image6.png" alt="Clicando no endereço do imóvel" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> Você será encaminhado para a página com as informações do imóvel contendo: Foto da frente do imóvel, Resumo das informações, Informações de Endereço e Informações do Terreno/Lote.
+                        <div class="screenshot-container">
+                            <img src="images/image25.png" alt="Página de detalhes do imóvel" class="screenshot">
+                        </div>
+                    </div>
+                    
+                    <h4>Voltar para a listagem</h4>
+                    <ol class="step-list">
+                        <li>Clique no botão "Voltar para a lista" no topo da página
+                            <div class="screenshot-container">
+                                <img src="images/image32.png" alt="Botão Voltar para a lista" class="screenshot">
+                            </div>
+                        </li>
+                    </ol>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> Você será encaminhado de volta à tela de listagem de imóveis.
+                        <div class="screenshot-container">
+                            <img src="images/image37.png" alt="De volta à listagem" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.7 Sair -->
+            <div id="sair-sistema" class="content-section">
+                <div class="section-header">
+                    <h2>4.7 Sair do Sistema</h2>
+                </div>
+                <div class="content-card">
+                    <h3>Como Encerrar a Sessão</h3>
+                    <p>Se deseja sair da sua conta no Admin Hub basta clicar no botão "Sair" na parte superior direita da tela.</p>
+                    
+                    <div class="screenshot-container">
+                        <img src="images/image11.png" alt="Botão Sair" class="screenshot">
+                    </div>
+                    
+                    <div class="alert alert-success">
+                        <strong>Resultado esperado:</strong> Você será encaminhado à tela de Login do sistema.
+                        <div class="screenshot-container">
+                            <img src="images/image9.png" alt="Voltou para tela de login" class="screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script>
+        function toggleSection(element) {
+            element.parentElement.classList.toggle('expanded');
+        }
+        
+        function showContent(id) {
+            // Remove active class from all sections and nav items
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            // Add active class to selected section
+            const section = document.getElementById(id);
+            if (section) {
+                section.classList.add('active');
+                
+                // Find and highlight the corresponding nav item
+                const navItem = document.querySelector(`.nav-item[onclick="showContent('${id}')"]`);
+                if (navItem) {
+                    navItem.classList.add('active');
+                }
+            }
+            
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        function searchContent(event) {
+            const term = event.target.value.toLowerCase();
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(term) ? 'block' : 'none';
+            });
+            
+            // Also search in section titles
+            document.querySelectorAll('.nav-section-title').forEach(title => {
+                const text = title.textContent.toLowerCase();
+                const hasVisibleItems = Array.from(title.parentElement.querySelectorAll('.nav-item'))
+                    .some(item => item.style.display !== 'none');
+                
+                if (text.includes(term) || hasVisibleItems) {
+                    title.parentElement.style.display = 'block';
+                } else {
+                    title.parentElement.style.display = 'none';
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Expand all sections on desktop
+            if (window.innerWidth > 768) {
+                document.querySelectorAll('.nav-section').forEach(s => {
+                    if (s.querySelector('.nav-subsection')) {
+                        s.classList.add('expanded');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
