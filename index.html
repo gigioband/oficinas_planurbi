@@ -1,905 +1,639 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manual do Usuário AdminHub - PlanUrbi</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficinas Inteligentes - Apresentação Completa Responsiva (V2)</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
 
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-        --primary: #2E4E49;
-        --secondary: #4A7973;
-        --accent: #39625D;
-        --text: #333;
-        --bg: #F5F5F5;
-        --sidebar-width: 280px;
-        --header-height: 70px;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #F5F5F5 0%, #E8F5E9 100%);
-        color: var(--text);
-        line-height: 1.6;
-    }
-
-    .header {
-        background: linear-gradient(135deg, var(--secondary), var(--primary)); 
-        color: white;
-        padding: 1rem 2rem;
-        height: var(--header-height);
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-    }
-
-    .header h1 {
-        font-size: 1.3rem; 
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-
-    /* Tamanho padrão (desktop) */
-    .logo {
-        max-width: 180px;
-        height: auto;
-    }
-
-
-    .container {
-        display: flex;
-        margin-top: var(--header-height);
-        min-height: calc(100vh - var(--header-height));
-    }
-
-    .sidebar {
-        width: var(--sidebar-width);
-        background: white;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-        position: fixed;
-        height: calc(100vh - var(--header-height));
-        overflow-y: auto;
-        transition: transform 0.3s ease;
-        z-index: 999;
-    }
-
-    .sidebar-header {
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #E8F5E9, #D7EBE8); 
-        border-bottom: 2px solid var(--accent);
-    }
-
-    .sidebar-header h2 {
-        color: var(--primary);
-        font-size: 1.2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .search-box {
-        width: 100%;
-        padding: 0.75rem;
-        border: 2px solid #E0E0E0;
-        border-radius: 8px;
-        font-size: 0.9rem;
-    }
-
-    .nav-section { margin-bottom: 0.5rem; }
-
-    .nav-section-title {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        color: var(--primary);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
-    }
-
-    .nav-section-title:hover {
-        background: #F5F5F5;
-        border-left-color: var(--accent);
-    }
-
-    .nav-arrow {
-        transition: transform 0.3s ease;
-        font-size: 0.8rem;
-    }
-
-    .nav-section.expanded .nav-arrow {
-        transform: rotate(90deg);
-    }
-
-    .nav-subsection {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-    }
-
-    .nav-section.expanded .nav-subsection {
-        max-height: 1000px;
-    }
-
-    .nav-item {
-        padding: 0.6rem 1.5rem 0.6rem 3rem;
-        color: #666;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-    }
-
-    .nav-item:hover {
-        background: #F5F5F5;
-        color: var(--primary);
-        padding-left: 3.3rem;
-    }
-
-    .nav-item.active {
-        background: linear-gradient(90deg, rgba(46, 78, 73, 0.1), transparent);
-        color: var(--primary);
-        font-weight: 500;
-    }
-
-    .main-content {
-        margin-left: var(--sidebar-width);
-        flex: 1;
-        padding: 2rem;
-    }
-
-    .content-section { display: none; }
-
-    .content-section.active {
-        display: block;
-        animation: fadeIn 0.5s ease;
-    }
-
-    .section-header {
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 3px solid var(--accent);
-    }
-
-    .section-header h2 {
-        color: var(--primary);
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .content-card {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .content-card h3 {
-        color: var(--primary);
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-    }
-
-    /* --- IMAGENS DAS CAPTURAS --- */
-    .screenshot {
-        width: 100%;
-        max-width: 800px;
-        margin: 1.5rem auto;
-        display: block;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        border: 1px solid #E0E0E0;
-    }
-
-    /* BOTÃO MOBILE */
-    .mobile-toggle {
-        display: none;
-        background: var(--accent);
-        color: white;
-        border: none;
-        padding: 0.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 1.5rem;
-        margin-right: 0.5rem;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ---------- MOBILE ---------- */
-    @media (max-width: 768px) {
-
-        .mobile-toggle { display: block; }
-
-        .sidebar { transform: translateX(-100%); }
-        .sidebar.open { transform: translateX(0); }
-
-        .main-content { 
-            margin-left: 0; 
-            padding: 1rem; 
-        }
-
-        .header {
-            padding: 1rem 0.5rem;
-        }
-
-        .header h1 {
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        /* ---- TAMANHO DA LOGO ---- */
-        .logo { 
-            max-width: 140px;
+    <style>
+        /* Estilos Base e Responsivos */
+        body { margin: 0; font-family: 'Montserrat', sans-serif; }
+        
+        /* Ajuste do container para ser full-width e flexível */
+        .slide-container { 
+            width: 100%; 
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 80px 0 40px 0; /* Espaço para o menu fixo + padding inferior */
+            box-sizing: border-box; 
         }
         
-    }
-</style>
+        /* Estilos para o menu superior (Navbar) */
+        .menu-superior {
+            background-color: #1e3a8a;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: center;
+        }
+        .menu-superior a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            white-space: nowrap; /* Impede que os links quebrem a linha */
+            transition: background-color 0.3s;
+        }
+        .menu-superior a:hover {
+            background-color: #3b82f6;
+        }
+        .nav-content {
+            display: flex;
+            max-width: 1280px;
+            overflow-x: auto; /* Permite rolar horizontalmente em telas menores */
+            scrollbar-width: none; /* Esconde a barra de rolagem (Firefox) */
+            -ms-overflow-style: none; /* Esconde a barra de rolagem (IE and Edge) */
+        }
+        .nav-content::-webkit-scrollbar {
+            display: none; /* Esconde a barra de rolagem (Chrome, Safari, Opera) */
+        }
+
+        /* Classe de correção para o estilo original de 'slide-container' */
+        .slide-container > div.w-full.max-w-6xl.px-8 {
+            padding-top: 2rem; 
+            padding-bottom: 2rem;
+        }
+        
+        /* Classes de Fundo */
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #3b82f6 100%); }
+        
+        /* Ajuste do cronograma horizontal para mobile */
+        @media (max-width: 767px) {
+            .cronograma-flex-container {
+                flex-direction: column; /* Força a pilha vertical */
+                align-items: flex-start; /* Alinha à esquerda */
+            }
+            .cronograma-flex-container > div.cronograma-item {
+                width: 100%; /* Ocupa a largura total */
+                text-align: left;
+                margin-bottom: 2rem;
+            }
+            /* Esconde os traços horizontais em mobile */
+            .cronograma-flex-container > div.flex-1 {
+                display: none;
+            }
+            .cronograma-item .w-16 {
+                margin-left: 0; /* Alinha os círculos à esquerda */
+            }
+        }
+    </style>
 </head>
-
 <body>
-<header class="header">
-    <h1>
-        <button class="mobile-toggle" onClick="toggleSidebar()">☰</button>
-        <img src="images/planurbi_marca.png" alt="Logo PlanUrbi Barra de São Miguel" class="logo">
-        Manual do Usuário AdminHub
-    </h1>
-</header>
 
-    <div class="container">
-        <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>📚 Navegação</h2>
-                <input type="text" class="search-box" placeholder="Buscar no manual..." onkeyup="searchContent(event)">
-            </div>
-            <div class="nav-menu">
-                <div class="nav-section">
-                    <div class="nav-section-title" onclick="showContent('apresentacao')">
-                        <span>1. Apresentação</span>
-                    </div>
+    <nav class="menu-superior">
+        <div class="nav-content">
+            <a href="#home">Home</a>
+            <a href="#introducao">Introdução</a>
+            <a href="#objetivos">Objetivos</a>
+            <a href="#justificativa">Justificativa</a>
+            <a href="#metodologia">Metodologia</a>
+            <a href="#etapas">Etapas</a>
+            <a href="#diferenciais">Diferenciais</a>
+            <a href="#indicadores">Indicadores</a>
+            <a href="#resultados">Resultados</a>
+            <a href="#cronograma">Cronograma</a>
+            <a href="#investimento">Investimento</a>
+            <a href="#chamada-acao">Chamada à Ação</a>
+        </div>
+    </nav>
+
+    <section id="home" class="slide-container gradient-bg text-white">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <i class="fas fa-network-wired text-4xl sm:text-9xl absolute top-10 right-10 text-white"></i>
+            <i class="fas fa-city text-3xl sm:text-7xl absolute bottom-20 left-20 text-white"></i>
+            <i class="fas fa-users text-2xl sm:text-5xl absolute top-32 left-32 text-white"></i>
+            <i class="fas fa-robot text-3xl sm:text-6xl absolute bottom-32 right-32 text-white"></i>
+        </div>
+        <div class="relative z-10 text-center px-6 sm:px-12">
+            <h1 class="text-3xl sm:text-6xl font-black mb-4 leading-tight">Oficinas Inteligentes</h1>
+            <h2 class="text-2xl sm:text-5xl font-bold mb-6 text-yellow-300">com Bárbara</h2>
+            <div class="w-24 h-1 bg-yellow-300 mx-auto mb-8"></div>
+            <p class="text-lg sm:text-2xl font-light mb-8 max-w-3xl leading-relaxed">
+                Modernização e Democratização da Participação Popular no Plano Diretor
+            </p>
+            <div class="flex items-center justify-center space-x-3 sm:space-x-6 text-sm sm:text-lg flex-wrap">
+                <div class="flex items-center mt-2">
+                    <i class="fas fa-brain text-xl sm:text-2xl mr-2 text-yellow-300"></i>
+                    <span>Inteligência Artificial</span>
                 </div>
-                <div class="nav-section">
-                    <div class="nav-section-title" onclick="toggleSection(this)">
-                        <span>2. Visão Geral</span>
-                        <span class="nav-arrow">▶</span>
-                    </div>
-                    <div class="nav-subsection">
-                        <div class="nav-item" onclick="showContent('tela-login')">2.1.1 Tela de Login</div>
-                        <div class="nav-item" onclick="showContent('tela-inicial')">2.1.2 Tela Inicial</div>
-                        <div class="nav-item" onclick="showContent('tela-listagem')">2.1.3 Tela de Listagem</div>
-                        <div class="nav-item" onclick="showContent('tela-visualizacao')">2.1.4 Visualização</div>
-                        <div class="nav-item" onclick="showContent('estado-botoes')">2.2 Estado dos Botões</div>
-                    </div>
+                <div class="flex items-center mt-2">
+                    <i class="fab fa-whatsapp text-xl sm:text-2xl mr-2 text-green-400"></i>
+                    <span>WhatsApp</span>
                 </div>
-                <div class="nav-section">
-                    <div class="nav-section-title" onclick="toggleSection(this)">
-                        <span>3. Acesso ao Site</span>
-                        <span class="nav-arrow">▶</span>
-                    </div>
-                    <div class="nav-subsection">
-                        <div class="nav-item" onclick="showContent('como-login')">3.1 Como Fazer Login</div>
-                        <div class="nav-item" onclick="showContent('criar-senha')">3.2 Criar Nova Senha</div>
-                        <div class="nav-item" onclick="showContent('recuperar-senha')">3.3 Recuperar Senha</div>
-                    </div>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title" onclick="toggleSection(this)">
-                        <span>4. Funcionalidades</span>
-                        <span class="nav-arrow">▶</span>
-                    </div>
-                    <div class="nav-subsection">
-                        <div class="nav-item" onclick="showContent('acessar-municipio')">4.1 Acessar Município</div>
-                        <div class="nav-item" onclick="showContent('listagem-imoveis')">4.2 Listagem</div>
-                        <div class="nav-item" onclick="showContent('utilizar-filtros')">4.3 Filtros</div>
-                        <div class="nav-item" onclick="showContent('exportar-csv')">4.4 Exportar CSV</div>
-                        <div class="nav-item" onclick="showContent('mudar-pagina')">4.5 Paginação</div>
-                        <div class="nav-item" onclick="showContent('visualizar-imovel')">4.6 Visualizar um Imóvel</div>
-                        <div class="nav-item" onclick="showContent('sair-sistema')">4.7 Sair</div>
-                    </div>
+                <div class="flex items-center mt-2">
+                    <i class="fas fa-handshake text-xl sm:text-2xl mr-2 text-yellow-300"></i>
+                    <span>Participação Cidadã</span>
                 </div>
             </div>
-        </nav>
-        <main class="main-content">
-            <div id="welcome" class="content-section active">
-                <div class="section-header">
-                    <h2>Bem-vindo ao Manual do HUB PlanUrbi</h2>
-                    <p>Sistema de Gestão de Dados Imobiliários</p>
+        </div>
+    </section>
+
+    <section id="introducao" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-12 text-center">Introdução</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">O Desafio</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Baixa participação e barreiras de acesso nos processos tradicionais de elaboração do Plano Diretor</p>
                 </div>
-                <div class="content-card">
-                    <h3>📋 Sobre este Manual</h3>
-                    <p>Este manual interativo auxilia os usuários do sistema HUB PlanUrbi da Prefeitura de Barra de São Miguel/AL.</p>
-                    <ul class="feature-list">
-                        <li>Instruções detalhadas sobre todas as funcionalidades</li>
-                        <li>Passo a passo para as operações principais</li>
-                        <li>Dicas e boas práticas de uso</li>
-                        <li>Resolução de problemas comuns</li>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-lightbulb text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">A Solução</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Integração de tecnologia acessível + inteligência artificial + metodologias participativas híbridas</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bullseye text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">O Que Entregamos</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Escuta ampla, qualificada e transparente com relatórios e mapas temáticos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="objetivos" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-8 text-center">Objetivos do Projeto</h1>
+            <div class="bg-white rounded-lg p-6 shadow-lg mb-6 border-l-4 border-blue-600">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-bullseye text-blue-600 text-3xl mr-3"></i>
+                    Objetivo Geral
+                </h2>
+                <p class="text-gray-700 text-lg leading-relaxed">Promover uma participação ampla, inclusiva e qualificada da população na construção do Plano Diretor, utilizando ferramentas digitais acessíveis e metodologias híbridas</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-green-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fab fa-whatsapp text-green-500 text-xl mr-2"></i>
+                        Acesso via WhatsApp
+                    </h3>
+                    <p class="text-gray-600 text-sm">Facilitar o acesso dos cidadãos às discussões do Plano Diretor por meio de canais digitais como o WhatsApp</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-purple-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-link text-purple-500 text-xl mr-2"></i>
+                        Integração de Contribuições
+                    </h3>
+                    <p class="text-gray-600 text-sm">Integrar contribuições presenciais e virtuais em uma base única, auditável e transparente</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-orange-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-users text-orange-500 text-xl mr-2"></i>
+                        Engajamento Diverso
+                    </h3>
+                    <p class="text-gray-600 text-sm">Estimular o engajamento de diferentes faixas etárias e perfis sociais</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-red-500">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-chart-line text-red-500 text-xl mr-2"></i>
+                        Indicadores de Impacto
+                    </h3>
+                    <p class="text-gray-600 text-sm">Desenvolver indicadores de impacto que qualifiquem a efetividade da participação</p>
+                </div>
+                <div class="bg-white rounded-lg p-5 shadow-lg border-l-4 border-indigo-500 md:col-span-2">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                        <i class="fas fa-share-alt text-indigo-500 text-xl mr-2"></i>
+                        Modelo Replicável
+                    </h3>
+                    <p class="text-gray-600 text-sm">Criar um modelo replicável para outros municípios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="justificativa" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-12 text-center">Justificativa</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line-down text-3xl text-red-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Problemas Atuais</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Baixa participação e barreiras de acesso</li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Fragmentação de dados e pouca transparência</li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs text-red-400 mt-2 mr-2"></i>Dificuldade de devolutivas claras à população</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Solução IA + WhatsApp</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Acesso simples, gratuito e 24/7 no canal do cotidiano</li>
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Linguagem clara e organização automática das contribuições</li>
+                        <li class="flex items-start"><i class="fas fa-check text-xs text-green-500 mt-2 mr-2"></i>Trazo de auditoria e visibilidade pública dos resultados</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Valor Público Gerado</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Mais legitimidade nas decisões urbanas</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Maior eficiência no processo participativo</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-up text-xs text-green-500 mt-2 mr-2"></i>Fortalecimento da confiança social</li>
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="apresentacao" class="content-section">
-                <div class="section-header">
-                    <h2>1. Apresentação</h2>
-                </div>
-                <div class="content-card">
-                    <h3>O que é o AdminHub PlanUrbi</h3>
-                    <p> O AdminHub PlanUrbi é a plataforma que centraliza e disponibiliza todas as informações georreferenciadas coletadas pelo Mapeamento Cadastral Georreferenciado (MCG) do município da Barra de São Miguel. 
-A plataforma integra dados alfanuméricos e espaciais, permitindo a visualização detalhada de imóveis, consulta de atributos, filtros avançados, exportações e análise territorial — apoiando atividades de planejamento, gestão urbana, fiscalização e modernização tributária.</p>
-                </div>
-            </div>
-
-            <div id="tela-login" class="content-section">
-                <div class="section-header">
-                    <h2>2.1.1 Tela de Login</h2>
-                </div>
-                <div class="content-card">
-                    <div class="screenshot-container">
-                        <img src="images/image2.png" alt="Tela de Login" class="screenshot">
-                        <p class="screenshot-caption">Tela de Login do Sistema</p>
+    <section id="metodologia" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-12 text-center">Como Funciona — Metodologia</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mobile-alt text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Canais Integrados</h2>
                     </div>
-                    
-                    <h3>Elementos da Tela</h3>
-                    <p><strong>1 - Campos de CPF e Senha:</strong> Espaços onde o usuário deve digitar seu CPF e sua senha para acessar o sistema.</p>
-                    <p><strong>2 - Botão "Entrar":</strong> Clique para fazer o login após preencher os campos.</p>
-                    <p><strong>3 - Botão "Esqueci minha senha":</strong> Use quando não lembrar a senha. O sistema irá guiar o usuário para redefini-la.</p>
-                </div>
-            </div>
-
-            <div id="tela-inicial" class="content-section">
-                <div class="section-header">
-                    <h2>2.1.2 Tela Inicial</h2>
-                </div>
-                <div class="content-card">
-                    <div class="screenshot-container">
-                        <img src="images/image24.png" alt="Tela Inicial" class="screenshot">
-                        <p class="screenshot-caption">Tela Inicial com Card do Município</p>
-                    </div>
-                    
-                    <h3>Componentes da Interface</h3>
-                    <h4>1 - Menu superior</h4>
-                    <p>Contém dois botões:</p>
-                    <ul>
-                        <li>À esquerda, um campo de seleção para escolher o município.</li>
-                        <li>À direita, o botão "Sair", usado para encerrar o acesso ao sistema.</li>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fab fa-whatsapp text-green-500 mr-2"></i> WhatsApp Business API</li>
+                        <li><i class="fas fa-qrcode text-blue-500 mr-2"></i> QR Codes inteligentes</li>
+                        <li><i class="fas fa-file-alt text-purple-500 mr-2"></i> Formulários online</li>
+                        <li><i class="fas fa-users text-orange-500 mr-2"></i> Oficinas híbridas</li>
                     </ul>
-                    
-                    <h4>2 - Card do município</h4>
-                    <p>Mostra as informações do município selecionado, incluindo o nome, foto, localização e data da última atualização dos imóveis.</p>
-                    
-                    <h4>3 - Botão de acesso aos dados</h4>
-                    <p>Ao clicar, o usuário entra na página com os dados detalhados do município escolhido.</p>
                 </div>
-            </div>
-
-            <div id="tela-listagem" class="content-section">
-                <div class="section-header">
-                    <h2>2.1.3 Tela de Listagem</h2>
-                </div>
-                <div class="content-card">
-                    <div class="screenshot-container">
-                        <img src="images/image10.png" alt="Área de Filtros" class="screenshot">
-                        <p class="screenshot-caption">Área de Filtros da Listagem</p>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-robot text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Assistente Virtual Bárbara</h2>
                     </div>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image40.png" alt="Lista de Imóveis" class="screenshot">
-                        <p class="screenshot-caption">Lista de Imóveis e Paginação</p>
-                    </div>
-                    
-                    <h3>Estrutura da Tela</h3>
-                    
-                    <h4>1 - Filtros</h4>
-                    <p>Área onde o usuário pode definir critérios de busca, como datas, bairro, tipo ou situação do imóvel, para refinar os resultados exibidos.</p>
-                    
-                    <h4>2 - Listagem de imóveis</h4>
-                    <p>Mostra o total de imóveis encontrados, o botão para exportar os dados em formato CSV e a lista com as informações principais de cada imóvel: foto, endereço, frentes, tipo, natureza, fechamento, estrutura, padrão, andar, situação da rua e data de cadastro.</p>
-                    
-                    <h4>3 - Paginação</h4>
-                    <p>Exibe em qual página o usuário está e o total de páginas disponíveis, além de botões para avançar ou voltar entre as páginas da listagem.</p>
-                </div>
-            </div>
-
-            <div id="tela-visualizacao" class="content-section">
-                <div class="section-header">
-                    <h2>2.1.4 Tela de Visualização de Imóvel</h2>
-                </div>
-                <div class="content-card">
-                    <div class="screenshot-container">
-                        <img src="images/image39.png" alt="Visualização do Imóvel - Parte Superior" class="screenshot">
-                        <p class="screenshot-caption">Foto e Resumo das Informações</p>
-                    </div>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image22.png" alt="Visualização do Imóvel - Parte Inferior" class="screenshot">
-                        <p class="screenshot-caption">Informações de Endereço e Terreno</p>
-                    </div>
-                    
-                    <h3>Detalhes do Imóvel</h3>
-                    
-                    <h4>1 - Botão "Voltar"</h4>
-                    <p>Retorna para a tela anterior com a listagem de imóveis.</p>
-                    
-                    <h4>2 - Foto do imóvel</h4>
-                    <p>Exibe a imagem da frente do imóvel cadastrado.</p>
-                    
-                    <h4>3 - Resumo das informações</h4>
-                    <p>Mostra os dados principais do imóvel, como endereço, coordenadas, se é terreno ou lote, e quem realizou o envio. Inclui também as informações gerais: Perímetro, Natureza, Data e hora de criação, Data e hora da última atualização e Observações.</p>
-                    
-                    <h4>4 - Informações de Endereço</h4>
-                    <p>Reúne os dados de localização:</p>
-                    <ul>
-                        <li>Endereço Principal: Rua, Número, Bairro e CEP</li>
-                        <li>Endereço Fiscal: CPF/CNPJ, indicação se é o mesmo endereço e o responsável identificado</li>
-                        <li>Coordenadas: Latitude e Longitude</li>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fas fa-brain text-blue-500 mr-2"></i> IA treinada para interpretar</li>
+                        <li><i class="fas fa-layer-group text-purple-500 mr-2"></i> Organiza por temas territoriais</li>
+                        <li><i class="fas fa-filter text-green-500 mr-2"></i> Categorização automática</li>
+                        <li><i class="fas fa-comments text-orange-500 mr-2"></i> Respostas padronizadas</li>
                     </ul>
-                    
-                    <h4>5 - Informações do Terreno/Lote</h4>
-                    <p>Apresenta as características do lote, incluindo número de frentes, se possui calçada e o tipo de fechamento.</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Dashboard de Transparência</h2>
+                    </div>
+                    <ul class="text-gray-600 leading-relaxed space-y-2">
+                        <li><i class="fas fa-tachometer-alt text-blue-500 mr-2"></i> Indicadores em tempo real</li>
+                        <li><i class="fas fa-map-marked-alt text-green-500 mr-2"></i> Mapas temáticos interativos</li>
+                        <li><i class="fas fa-file-invoice text-purple-500 mr-2"></i> Relatórios automáticos</li>
+                        <li><i class="fas fa-eye text-orange-500 mr-2"></i> Visibilidade pública total</li>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="estado-botoes" class="content-section">
-                <div class="section-header">
-                    <h2>2.2 Estado dos Botões</h2>
-                </div>
-                <div class="content-card">
-                    <p>Os botões podem aparecer em dois estados, dependendo da ação disponível no momento.</p>
-                    
-                    <div class="alert alert-success">
-                        <strong>Botão Ativo:</strong> indica que a ação pode ser realizada. O botão está visível e pode ser clicado.
-                        <div class="screenshot-container">
-                            <img src="images/image21.png" alt="Botão Ativo" class="screenshot" style="max-width: 400px;">
-                        </div>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <strong>Botão Inativo:</strong> indica que a ação não está disponível naquele momento. O botão aparece com cor mais clara e não pode ser clicado.
-                        <div class="screenshot-container">
-                            <img src="images/image35.png" alt="Botão Inativo" class="screenshot" style="max-width: 400px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="etapas" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-8 text-center">Etapas de Implementação</h1>
+            <div class="relative">
+                <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-0.5 h-full w-1 bg-gray-300 top-0"></div>
+                <div class="space-y-8">
 
-            <div id="como-login" class="content-section">
-                <div class="section-header">
-                    <h2>3.1 Como Fazer Login</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Passo a Passo</h3>
-                    <ol class="step-list">
-                        <li>Acesse o link <strong>https://hub.planurbi.com.br/</strong></li>
-                        <li>No campo CPF, digite seu número de CPF (somente números)
-                            <div class="screenshot-container">
-                                <img src="images/image23.png" alt="Campo CPF" class="screenshot">
-                            </div>
-                        </li>
-                        <li>No campo Senha, digite sua senha
-                            <div class="screenshot-container">
-                                <img src="images/image29.png" alt="Campo Senha" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Clique no botão verde "Entrar"
-                            <div class="screenshot-container">
-                                <img src="images/image48.png" alt="Botão Entrar" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <h4>Resultado esperado</h4>
-                    <div class="alert alert-success">
-                        <strong>Caso de sucesso:</strong> Você será direcionado para a página inicial do sistema.
-                        <div class="screenshot-container">
-                            <img src="images/image12.png" alt="Login bem-sucedido" class="screenshot">
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">1</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-blue-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 1 - Planejamento e Preparação</h3>
+                            <p class="text-gray-600 text-sm">Definição da equipe técnica, configuração das ferramentas digitais e LGPD, elaboração de materiais de comunicação</p>
                         </div>
                     </div>
-                    
-                    <div class="alert alert-warning">
-                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que o CPF ou a senha estão incorretos. Se o erro continuar, utilize a opção "Esqueci minha senha" ou entre em contato com o suporte.
-                        <div class="screenshot-container">
-                            <img src="images/image7.png" alt="Erro no login" class="screenshot">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div id="criar-senha" class="content-section">
-                <div class="section-header">
-                    <h2>3.2 Criar Nova Senha</h2>
-                </div>
-                <div class="content-card">
-                    <p>Quando fizer login pela primeira vez, será necessário criar sua nova senha, por questões de segurança.</p>
-                    
-                    <h3>Procedimento</h3>
-                    <ol class="step-list">
-                        <li>Insira sua "Nova senha" no primeiro campo, ela deve conter no mínimo 4 caracteres</li>
-                        <li>Repita a mesma senha no campo "Confirmar Nova Senha"
-                            <div class="screenshot-container">
-                                <img src="images/image50.png" alt="Campos de criar nova senha" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Clique no botão "Salvar Nova Senha"
-                            <div class="screenshot-container">
-                                <img src="images/image43.png" alt="Botão Salvar Nova Senha" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <h4>Resultado esperado</h4>
-                    <div class="alert alert-success">
-                        <strong>Caso de sucesso:</strong> Surgirá uma mensagem de sucesso e você será direcionado para a página inicial do sistema.
-                        <div class="screenshot-container">
-                            <img src="images/image3.png" alt="Senha criada com sucesso" class="screenshot">
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">2</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-purple-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 2 - Treinamento e Calibração da IA</h3>
+                            <p class="text-gray-600 text-sm">Treinamento inicial do modelo de linguagem, testes regionais de interpretação e categorização</p>
                         </div>
                     </div>
                     
-                    <div class="alert alert-warning">
-                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que as senhas não coincidem ou que os campos estão vazios. Verifique se digitou corretamente e tente novamente.
-                        <div class="screenshot-container">
-                            <img src="images/image31.png" alt="Erro - senhas não coincidem" class="screenshot">
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">3</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-green-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 3 - Capacitação e Mobilização</h3>
+                            <p class="text-gray-600 text-sm">Formação de mediadores locais, campanha de comunicação integrada (digital + presencial)</p>
                         </div>
-                        <div class="screenshot-container">
-                            <img src="images/image28.png" alt="Erro - campos vazios" class="screenshot">
+                    </div>
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">4-5</div>
+                       <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-grey-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Meses 4 e 5 - Oficinas Inteligentes</h3>
+                            <p class="text-gray-600 text-sm">Realização das oficinas híbridas em bairros e comunidades, coleta contínua via WhatsApp e QR Codes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">6</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-red-500 w-full md:ml-0 md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 6 - Análise e Validação</h3>
+                            <p class="text-gray-600 text-sm">Organização das contribuições, validação comunitárias e devolutiva (“feedback loop”)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">7</div>
+                        <div class="ml-20 flex-1 bg-white rounded-lg p-4 shadow-lg border-l-4 border-teal-500 w-full md:ml-auto md:max-w-md md:pl-6 md:pr-0 md:text-left">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">Mês 7 - Encerramento e Relatório Final</h3>
+                            <p class="text-gray-600 text-sm">Síntese técnica das contribuições incorporadas ao Plano Diretor, avaliação do impacto</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="recuperar-senha" class="content-section">
-                <div class="section-header">
-                    <h2>3.3 Como Recuperar a Senha</h2>
+    <section id="diferenciais" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-12 text-center">Diferenciais e Inovação</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shield-alt text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Conformidade LGPD</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Consentimento explícito, finalidade clara e segurança de dados garantida em toda a coleta</p>
                 </div>
-                <div class="content-card">
-                    <h3>Passos para Recuperação</h3>
-                    <ol class="step-list">
-                        <li>Clique em "Esqueceu a senha?"
-                            <div class="screenshot-container">
-                                <img src="images/image1.png" alt="Link Esqueceu a senha" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Digite seu CPF
-                            <div class="screenshot-container">
-                                <img src="images/image8.png" alt="Tela de recuperação - digitar CPF" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Clique em "Redefinir Senha"
-                            <div class="screenshot-container">
-                                <img src="images/image36.png" alt="Botão Redefinir Senha" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <h4>Resultado esperado</h4>
-                    <div class="alert alert-success">
-                        <strong>Caso de sucesso:</strong> Surgirá uma mensagem de sucesso. Clique em "Voltar para o Login" e faça login com seu CPF e a Nova senha.
-                        <div class="screenshot-container">
-                            <img src="images/image46.png" alt="Senha redefinida com sucesso" class="screenshot">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hands-helping text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Inclusão Digital</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Pontos de apoio presencial com mediadores locais para cidadãos sem acesso à internet</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-check-double text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Validação Cruzada</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Revisão das contribuições de maior impacto junto às comunidades locais</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gamepad text-3xl text-orange-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Gamificação</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">"Missões Urbanas" para engajar juventude e ampliar o senso de pertencimento</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-indigo-500 mt-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-sync-alt text-3xl text-indigo-500 mr-3"></i>
+                    <h2 class="text-xl font-bold text-gray-800">Replicabilidade</h2>
+                </div>
+                <p class="text-gray-600 leading-relaxed">Arquitetura modular e documentada, aplicável a qualquer município brasileiro</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="indicadores" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-8 text-center">Indicadores de Impacto</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Quantitativos</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-users text-blue-500 mr-2"></i> Nº de participantes</li>
+                        <li class="flex items-center"><i class="fas fa-comments text-blue-500 mr-2"></i> Mensagens recebidas</li>
+                        <li class="flex items-center"><i class="fas fa-calendar-check text-blue-500 mr-2"></i> Oficinas realizadas</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-star text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Qualitativos</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-smile text-green-500 mr-2"></i> Satisfação dos cidadãos</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Aplicabilidade das contribuições</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-t-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white mr-4">
+                            <i class="fas fa-eye text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Transparência</h2>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-reply text-purple-500 mr-2"></i> Taxa de devolutivas públicas</li>
+                        <li class="flex items-center"><i class="fas fa-chart-bar text-purple-500 mr-2"></i> Relatórios e dashboards</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resultados" class="slide-container bg-gray-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-12 text-center">Resultados Esperados</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-users text-3xl text-blue-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Ampliação da Participação</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Aumento significativo no número de cidadãos participantes do processo de elaboração do Plano Diretor</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-3xl text-green-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Melhoria na Qualidade</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Maior diversidade e qualidade das contribuições recebidas, com maior representatividade social</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-3xl text-purple-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Fortalecimento da Confiança</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Relação mais transparente e confiável entre a população e o poder público municipal</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-share-alt text-3xl text-orange-500 mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">Metodologia Replicável</h2>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">Modelo de engajamento digital que pode ser aplicado em outras políticas públicas municipais</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cronograma" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-8 text-center">Cronograma Visual</h1>
+            <div class="flex justify-center">
+                <div class="relative w-full max-w-5xl">
+                    <div class="flex items-center justify-between mb-6 cronograma-flex-container">
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M1</div>
+                            <h3 class="font-bold text-lg text-gray-800">Kick-off</h3>
+                            <p class="text-gray-600 text-sm">Plano de comunicação</p>
+                            <p class="text-gray-600 text-sm">Compliance LGPD</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4 hidden md:block"></div>
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M2</div>
+                            <h3 class="font-bold text-lg text-gray-800">IA Calibrada</h3>
+                            <p class="text-gray-600 text-sm">Modelo treinado</p>
+                            <p class="text-gray-600 text-sm">Testes aprovados</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4 hidden md:block"></div>
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto">M3</div>
+                            <h3 class="font-bold text-lg text-gray-800">Mediadores</h3>
+                            <p class="text-gray-600 text-sm">100% formados</p>
+                            <p class="text-gray-600 text-sm">Campanha ativa</p>
                         </div>
                     </div>
-                    
-                    <div class="alert alert-warning">
-                        <strong>Caso de erro:</strong> O sistema irá exibir uma mensagem informando que o CPF é inválido. Nesse caso, verifique se digitou corretamente e tente novamente.
-                        <div class="screenshot-container">
-                            <img src="images/image47.png" alt="Erro - CPF inválido" class="screenshot">
+                    <div class="flex items-center justify-between mb-6 cronograma-flex-container">
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto shadow-lg">M4-5</div>
+                            <h3 class="font-bold text-lg text-gray-800">Oficinas</h3>
+                            <p class="text-gray-600 text-sm">Realizadas por bairros</p>
+                            <p class="text-gray-600 text-sm">Painel público ativo</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4 hidden md:block"></div>
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto shadow-lg">M6</div>
+                            <h3 class="font-bold text-lg text-gray-800">Validação</h3>
+                            <p class="text-gray-600 text-sm">Análise temática</p>
+                            <p class="text-gray-600 text-sm">Feedback comunitário</p>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-4 hidden md:block"></div>
+                        <div class="text-center cronograma-item">
+                            <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center text-white text-xl font-bold mb-3 mx-auto shadow-lg">M7</div>
+                            <h3 class="font-bold text-lg text-gray-800">Relatório Final</h3>
+                            <p class="text-gray-600 text-sm">Apresentação oficial</p>
+                            <p class="text-gray-600 text-sm">Entrega para sociedade</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="acessar-municipio" class="content-section">
-                <div class="section-header">
-                    <h2>4.1 Acessar Município</h2>
+    <section id="investimento" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-800 mb-8 text-center">Investimento do Projeto</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-gray-800 text-xl">Desenvolvimento IA</h3>
+                        <i class="fas fa-robot text-blue-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-600">R$ 50.000</p>
+                    <p class="text-sm text-gray-600">Treinamento, API, Dashboard</p>
                 </div>
-                <div class="content-card">
-                    <h3>Como Selecionar um Município</h3>
-                    <p>Ao clicar no botão "Municípios" na parte superior direita da tela surgirá uma lista dos municípios que você tem acesso. Clique no município desejado.</p>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image11.png" alt="Seleção de Município" class="screenshot">
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-gray-800 text-xl">Consultoria Especializada</h3>
+                        <i class="fas fa-users text-purple-500 text-2xl"></i>
                     </div>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> Você será encaminhado para a tela inicial e poderá acessar os dados dos imóveis do município selecionado.
-                        <div class="screenshot-container">
-                            <img src="images/image12.png" alt="Tela inicial do município selecionado" class="screenshot">
-                        </div>
+                    <p class="text-3xl font-bold text-purple-600">R$ 60.000</p>
+                    <p class="text-sm text-gray-600">Gestão, Análise Urbana</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-orange-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-gray-800 text-xl">Capacitação Local</h3>
+                        <i class="fas fa-chalkboard-teacher text-orange-500 text-2xl"></i>
                     </div>
+                    <p class="text-3xl font-bold text-orange-600">R$ 35.000</p>
+                    <p class="text-sm text-gray-600">Treinamento, Oficinas</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-red-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-gray-800 text-xl">Comunicação</h3>
+                        <i class="fas fa-bullhorn text-red-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-red-600">R$ 25.000</p>
+                    <p class="text-sm text-gray-600">Identidade, QR Codes</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-lg border-l-4 border-teal-500 md:col-span-2">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-gray-800 text-xl">Infraestrutura</h3>
+                        <i class="fas fa-server text-teal-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-teal-600">R$ 15.000</p>
+                    <p class="text-sm text-gray-600">Hospedagem, Servidores</p>
                 </div>
             </div>
+            <div class="mt-8 text-center">
+                <p class="text-2xl font-bold text-gray-800">Total Estimado:</p>
+                <p class="text-4xl font-black text-blue-700">R$ 185.000</p>
+            </div>
+        </div>
+    </section>
 
-            <div id="listagem-imoveis" class="content-section">
-                <div class="section-header">
-                    <h2>4.2 Acessar Listagem de Imóveis</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Como Acessar</h3>
-                    <ol class="step-list">
-                        <li>Clique no botão "Acessar Dados"
-                            <div class="screenshot-container">
-                                <img src="images/image16.png" alt="Botão Acessar Dados" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> Você será encaminhado para a página da Listagem de Imóveis do Município.
-                        <div class="screenshot-container">
-                            <img src="images/image15.png" alt="Listagem de Imóveis" class="screenshot">
+    <section id="chamada-acao" class="slide-container bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="w-full max-w-6xl px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl sm:text-5xl font-black text-gray-800 mb-4">Uma cidade inteligente, colaborativa e democrática</h1>
+                <p class="text-lg sm:text-2xl text-gray-600 font-light">Juntos, vamos definir o futuro da sua cidade.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-xl">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-rocket text-4xl text-blue-500 mr-4"></i>
+                        <h2 class="text-2xl font-bold text-gray-800">Chamada à Ação</h2>
+                    </div>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">Vamos implementar o projeto piloto e criar um novo padrão de participação popular nas políticas urbanas.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-handshake text-xl text-green-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700 font-semibold">Reunião de alinhamento e definição de escopo</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-cogs text-xl text-purple-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700 font-semibold">Adequações locais (governança, comunicação, calendário)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-play-circle text-xl text-orange-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700 font-semibold">Kick-off do projeto e mapa de stakeholders</span>
                         </div>
                     </div>
+                </div>
+                <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white text-center shadow-xl flex flex-col justify-center items-center">
+                    <i class="fas fa-city text-5xl mb-4 opacity-80"></i>
+                    <h3 class="text-3xl font-black mb-2">Pronto para o Futuro?</h3>
+                    <p class="text-lg font-light mb-6">Entre em contato para agendar sua apresentação detalhada.</p>
+                    <a href="mailto:geovane.junior.ia@google.com" class="inline-block bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-300 transition duration-300">
+                        Fale Conosco
+                    </a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div id="utilizar-filtros" class="content-section">
-                <div class="section-header">
-                    <h2>4.3 Utilizar Filtros</h2>
-                </div>
-                <div class="content-card">
-                    <p>Na parte superior da tela existem 5 tipos de Filtros: Bairro, Tipo de imóvel, Natureza imobiliária, De e Até.</p>
-                    
-                    <h4>Filtro Bairro</h4>
-                    <p>Campo onde você digita o nome do bairro que gostaria de buscar. Por exemplo: Centro.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image30.png" alt="Filtro de Bairro" class="screenshot">
-                    </div>
-                    <div class="alert alert-success">
-                        A listagem irá mostrar apenas os imóveis localizados no bairro informado.
-                        <div class="screenshot-container">
-                            <img src="images/image19.png" alt="Resultado filtrado por bairro" class="screenshot">
-                        </div>
-                    </div>
-                    
-                    <h4>Filtro Tipos de Imóvel</h4>
-                    <p>Ao clicar mostra uma lista com os tipos de imóveis existentes: Casa, Prédio, Condomínio e Todos os Tipos.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image18.png" alt="Filtro de Tipo de Imóvel" class="screenshot">
-                    </div>
-                    <div class="alert alert-success">
-                        A listagem irá mostrar apenas imóveis do tipo selecionado.
-                        <div class="screenshot-container">
-                            <img src="images/image33.png" alt="Resultado filtrado por tipo" class="screenshot">
-                        </div>
-                    </div>
-                    
-                    <h4>Filtro Natureza Imobiliária</h4>
-                    <p>Ao clicar mostra uma lista com os tipos de naturezas: Todas, Terreno, Edificação, Edificação Temporária e Ruínas.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image45.png" alt="Filtro de Natureza" class="screenshot">
-                    </div>
-                    <div class="alert alert-success">
-                        Na listagem irão aparecer apenas os imóveis da natureza selecionada.
-                        <div class="screenshot-container">
-                            <img src="images/image34.png" alt="Resultado filtrado por natureza" class="screenshot">
-                        </div>
-                    </div>
-                    
-                    <h4>Filtros de Data</h4>
-                    <p><strong>Filtro "De":</strong> Ao clicar neste campo, você escolhe a data inicial. Ou seja, a partir de qual data deseja visualizar os imóveis registrados.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image14.png" alt="Filtro De" class="screenshot">
-                    </div>
-                    
-                    <p><strong>Filtro "Até":</strong> Ao clicar neste campo, você escolhe a data final. Ou seja, até qual data deseja visualizar os imóveis registrados.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image27.png" alt="Filtros De e Até" class="screenshot">
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <strong>Observação:</strong> O filtro "Até" só pode ser usado se o filtro "De" estiver preenchido. Caso nenhuma data seja selecionada, o sistema irá mostrar todos os imóveis registrados, sem filtro de período.
-                    </div>
-                    
-                    <h4>Botão "Limpar Filtros"</h4>
-                    <p>Remove todas as seleções feitas nos campos de filtro. Ao clicar nele, o sistema volta a mostrar todos os imóveis, sem aplicar nenhum filtro de busca.</p>
-                    <div class="screenshot-container">
-                        <img src="images/image17.png" alt="Botão Limpar Filtros" class="screenshot">
-                    </div>
-                </div>
-            </div>
-
-            <div id="exportar-csv" class="content-section">
-                <div class="section-header">
-                    <h2>4.4 Exportar CSV</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Como Exportar Dados</h3>
-                    <ol class="step-list">
-                        <li>Clique no botão "Exportar CSV"
-                            <div class="screenshot-container">
-                                <img src="images/image13.png" alt="Botão Exportar CSV" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Aguarde o carregamento
-                            <div class="screenshot-container">
-                                <img src="images/image20.png" alt="Carregando exportação" class="screenshot">
-                            </div>
-                        </li>
-                        <li>Após o carregamento, o arquivo será baixado automaticamente. Você pode encontrá-lo na pasta de downloads do seu computador, com o formato .csv, contendo todos os dados imobiliários exportados.</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div id="mudar-pagina" class="content-section">
-                <div class="section-header">
-                    <h2>4.5 Paginação</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Navegação entre Páginas</h3>
-                    <p>Na parte inferior da listagem tem a quantidade de páginas. Por exemplo: "Página 1 de 503" - onde "Página 1" indica a página atual e "de 503" o total de páginas existentes.</p>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image26.png" alt="Indicador de página" class="screenshot">
-                    </div>
-                    
-                    <p>Ao lado estão os botões que permitem alternar entre as páginas.</p>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image49.png" alt="Botões de paginação" class="screenshot">
-                    </div>
-                    
-                    <h4>Como usar:</h4>
-                    <ol class="step-list">
-                        <li>Clique no botão da direita para mudar para a próxima página
-                            <div class="screenshot-container">
-                                <img src="images/image41.png" alt="Clicando no botão de próxima página" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> A página será alterada mostrando uma listagem com outros imóveis.
-                        <div class="screenshot-container">
-                            <img src="images/image38.png" alt="Página alterada" class="screenshot">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="visualizar-imovel" class="content-section">
-                <div class="section-header">
-                    <h2>4.6 Visualizar um Imóvel</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Como Acessar Detalhes</h3>
-                    <ol class="step-list">
-                        <li>Na listagem clique sobre o endereço de um dos imóveis
-                            <div class="screenshot-container">
-                                <img src="images/image6.png" alt="Clicando no endereço do imóvel" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> Você será encaminhado para a página com as informações do imóvel contendo: Foto da frente do imóvel, Resumo das informações, Informações de Endereço e Informações do Terreno/Lote.
-                        <div class="screenshot-container">
-                            <img src="images/image25.png" alt="Página de detalhes do imóvel" class="screenshot">
-                        </div>
-                    </div>
-                    
-                    <h4>Voltar para a listagem</h4>
-                    <ol class="step-list">
-                        <li>Clique no botão "Voltar para a lista" no topo da página
-                            <div class="screenshot-container">
-                                <img src="images/image32.png" alt="Botão Voltar para a lista" class="screenshot">
-                            </div>
-                        </li>
-                    </ol>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> Você será encaminhado de volta à tela de listagem de imóveis.
-                        <div class="screenshot-container">
-                            <img src="images/image37.png" alt="De volta à listagem" class="screenshot">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="sair-sistema" class="content-section">
-                <div class="section-header">
-                    <h2>4.7 Sair do Sistema</h2>
-                </div>
-                <div class="content-card">
-                    <h3>Como Encerrar a Sessão</h3>
-                    <p>Se deseja sair da sua conta no Admin Hub basta clicar no botão "Sair" na parte superior direita da tela.</p>
-                    
-                    <div class="screenshot-container">
-                        <img src="images/image11.png" alt="Botão Sair" class="screenshot">
-                    </div>
-                    
-                    <div class="alert alert-success">
-                        <strong>Resultado esperado:</strong> Você será encaminhado à tela de Login do sistema.
-                        <div class="screenshot-container">
-                            <img src="images/image9.png" alt="Voltou para tela de login" class="screenshot">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-    <script>
-        function toggleSection(element) {
-            element.parentElement.classList.toggle('expanded');
-        }
-        
-        function showContent(id) {
-            // Remove active class from all sections and nav items
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            
-            // Add active class to selected section
-            const section = document.getElementById(id);
-            if (section) {
-                section.classList.add('active');
-                
-                // Find and highlight the corresponding nav item
-                const navItem = document.querySelector(`.nav-item[onclick="showContent('${id}')"]`);
-                if (navItem) {
-                    navItem.classList.add('active');
-                }
-            }
-            
-            // Close sidebar on mobile
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
-        
-        function searchContent(event) {
-            const term = event.target.value.toLowerCase();
-            document.querySelectorAll('.nav-item').forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(term) ? 'block' : 'none';
-            });
-            
-            // Also search in section titles
-            document.querySelectorAll('.nav-section-title').forEach(title => {
-                const text = title.textContent.toLowerCase();
-                const hasVisibleItems = Array.from(title.parentElement.querySelectorAll('.nav-item'))
-                    .some(item => item.style.display !== 'none');
-                
-                if (text.includes(term) || hasVisibleItems) {
-                    title.parentElement.style.display = 'block';
-                } else {
-                    title.parentElement.style.display = 'none';
-                }
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            // Expand all sections on desktop
-            if (window.innerWidth > 768) {
-                document.querySelectorAll('.nav-section').forEach(s => {
-                    if (s.querySelector('.nav-subsection')) {
-                        s.classList.add('expanded');
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
-
-
-
-
-
-
